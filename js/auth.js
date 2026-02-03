@@ -21,10 +21,15 @@ export function sendOTP(phone) {
 export function monitorAuth(redirectIfLoggedIn = false) {
   onAuthStateChanged(auth, (user) => {
     if (user && isSessionValid()) {
-      if (redirectIfLoggedIn) window.location.href = "/";
+      if (redirectIfLoggedIn) {
+        window.location.href = "index.html";
+      }
     } else {
       clearSession();
-      if (!redirectIfLoggedIn) window.location.href = "/login.html";
+      if (!redirectIfLoggedIn) {
+        window.location.href = "login.html";
+      }
     }
   });
 }
+
