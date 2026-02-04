@@ -55,6 +55,7 @@ function updateQty(id, change) {
 }
 
 
+
 function selectCategory(cat, el) {
   document.querySelectorAll(".category").forEach(c => c.classList.remove("active"));
   el.classList.add("active");
@@ -91,20 +92,10 @@ function renderMenu(cat) {
   });
 }
 
-function updateQty(id, change) {
-  cart[id] = Math.max(0, (cart[id] || 0) + change);
-  updateCartCount();
-  renderMenu(document.querySelector(".category.active").innerText);
-}
-
-function updateCartCount() {
-  const count = Object.values(cart).reduce((a, b) => a + b, 0);
-  cartCount.innerText = count;
-}
+renderCategories();
+renderMenu(categories[0]);
 
 document.getElementById("cartBtn").onclick = () => {
   window.location.href = "cart.html";
 };
 
-renderCategories();
-renderMenu(categories[0]);
