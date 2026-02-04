@@ -1,5 +1,7 @@
 // js/auth.js
 import { auth } from "./firebase.js";
+const BASE_PATH = "/Foodie-Scientist/";
+
 import {
   signInWithPhoneNumber,
   RecaptchaVerifier,
@@ -22,14 +24,15 @@ export function monitorAuth(redirectIfLoggedIn = false) {
   onAuthStateChanged(auth, (user) => {
     if (user && isSessionValid()) {
       if (redirectIfLoggedIn) {
-        window.location.href = "index.html";
+        window.location.replace(BASE_PATH + "index.html");
       }
     } else {
       clearSession();
       if (!redirectIfLoggedIn) {
-        window.location.href = "login.html";
+        window.location.replace(BASE_PATH + "login.html");
       }
     }
   });
 }
+
 
