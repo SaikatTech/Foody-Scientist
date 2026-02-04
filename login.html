@@ -16,26 +16,36 @@
 <input id="otp" placeholder="Enter OTP">
 <button id="verify">Verify</button>
 
+<!-- 🔴 REQUIRED: must exist BEFORE OTP -->
 <div id="recaptcha-container"></div>
 
 <script type="module">
 import { sendOTP } from "./js/auth.js";
 import { saveLoginTime } from "./js/session.js";
 
-let confirmation;
+let confirmationResult = null;
 
 document.getElementById("send").onclick = async () => {
   const phone = document.getElementById("phone").value;
-  confirmation = await sendOTP(phone);
-  alert("OTP sent");
+  try {
+    confirmationResult = await sendOTP(phone);
+    alert("OTP sent");
+  } catch (e) {
+    alert(e.message);
+    console.error(e);
+  }
 };
 
 document.getElementById("verify").onclick = async () => {
-  const otp = document.getElementById("otp").value;
-  await confirmation.confirm(otp);
-  saveLoginTime();
-  window.location.href = "/Foody-Scientist/index.html";
-
+  try {
+    const otp = document.getElementById("otp").value;
+    await confirmationResult.confirm(otp);
+    saveLoginTime();
+    window.location.href = "/Foody-Scientist/index.html";
+  } catch (e) {
+    alert("Invalid OTP");
+    console.error(e);
+  }
 };
 </script>
 
