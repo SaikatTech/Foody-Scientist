@@ -6,44 +6,19 @@
 </head>
 <body>
 
-<h2>Login with Phone</h2>
+<h2>Sign in to Order</h2>
 
-<input id="phone" placeholder="+91XXXXXXXXXX">
-<button id="send">Send OTP</button>
-
-<br><br>
-
-<input id="otp" placeholder="Enter OTP">
-<button id="verify">Verify</button>
-
-<!-- 🔴 REQUIRED: must exist BEFORE OTP -->
-<div id="recaptcha-container"></div>
+<button id="googleBtn">Continue with Google</button>
 
 <script type="module">
-import { sendOTP } from "./js/auth.js";
-import { saveLoginTime } from "./js/session.js";
+import { googleLogin } from "./js/auth.js";
 
-let confirmationResult = null;
-
-document.getElementById("send").onclick = async () => {
-  const phone = document.getElementById("phone").value;
+document.getElementById("googleBtn").onclick = async () => {
   try {
-    confirmationResult = await sendOTP(phone);
-    alert("OTP sent");
-  } catch (e) {
-    alert(e.message);
-    console.error(e);
-  }
-};
-
-document.getElementById("verify").onclick = async () => {
-  try {
-    const otp = document.getElementById("otp").value;
-    await confirmationResult.confirm(otp);
-    saveLoginTime();
+    await googleLogin();
     window.location.href = "/Foody-Scientist/index.html";
   } catch (e) {
-    alert("Invalid OTP");
+    alert("Login failed");
     console.error(e);
   }
 };
