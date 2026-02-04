@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Checkout</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <h2>Checkout</h2>
+</header>
+
+<div class="menu" id="cartItems"></div>
+
+<h3 style="padding:10px">Total: ₹<span id="total">0</span></h3>
+
+<div style="padding:10px">
+  <h4>Payment Options</h4>
+
+  <button onclick="showCash()">💵 Pay by Cash</button><br><br>
+  <button onclick="showQR()">📷 Scan QR</button><br><br>
+  <button onclick="payUPI()">📱 Pay via UPI App</button>
+</div>
+
+<div id="paymentBox" style="padding:10px"></div>
+
+<script type="module" src="js/cart.js"></script>
+</body>
+</html>
