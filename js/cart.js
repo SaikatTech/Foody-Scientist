@@ -60,9 +60,27 @@ window.showQR = () => {
 
 // 🟢 OPTION 3 — UPI APP
 window.payUPI = () => {
-  const upiId = "yourupi@bank"; // ADMIN CONFIG
+  const upiId = "yourupi@bank";
+  const name = "Foodie Scientist";
   const remark = `Order ${orderId}`;
-  const url = `upi://pay?pa=${upiId}&pn=Foodie%20Scientist&am=${total}&cu=INR&tn=${remark}`;
+  const amount = total;
 
-  window.location.href = url;
+  const baseParams =
+    `pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${encodeURIComponent(remark)}`;
+
+  // App-specific intents
+  const gpay = `tez://upi/pay?${baseParams}`;
+  const paytm = `paytmmp://pay?${baseParams}`;
+  const cred = `credpay://upi/pay?${baseParams}`;
+
+  paymentBox.innerHTML = `
+    <h4>Pay using UPI App</h4>
+    <button onclick="window.location.href='${gpay}'">💙 Pay with GPay</button><br><br>
+    <button onclick="window.location.href='${paytm}'">💙 Pay with Paytm</button><br><br>
+    <button onclick="window.location.href='${cred}'">💙 Pay with Cred</button><br><br>
+    <button onclick="window.location.href='upi://pay?${baseParams}'">
+      📱 Other UPI Apps
+    </button>
+  `;
 };
+
