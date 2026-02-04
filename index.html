@@ -3,20 +3,17 @@
 <head>
   <title>Food Cart</title>
 </head>
-<body style="display:none">
+<body>
 
 <h1>Welcome to Food Cart</h1>
-<p>Menu will load here (Phase 2)</p>
+<p>If you see this, HTML is loading</p>
 
 <script type="module">
 import { monitorAuth } from "./js/auth.js";
 
-monitorAuth(false);
+console.log("Index page JS loaded");
 
-// show page AFTER auth decision
-setTimeout(() => {
-  document.body.style.display = "block";
-}, 500);
+monitorAuth(false);
 </script>
 
 </body>
