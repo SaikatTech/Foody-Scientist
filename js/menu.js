@@ -94,8 +94,15 @@ function renderMenu(cat) {
 
 renderCategories();
 renderMenu(categories[0]);
+document.addEventListener("DOMContentLoaded", () => {
+  const cartBtn = document.getElementById("cartBtn");
 
-document.getElementById("cartBtn").onclick = () => {
-  window.location.href = "cart.html";
-};
+  if (cartBtn) {
+    cartBtn.addEventListener("click", () => {
+      window.location.href = "cart.html";
+    });
+  } else {
+    console.error("Cart button not found");
+  }
+});
 
