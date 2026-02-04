@@ -1,3 +1,5 @@
+// js/menu.js
+
 const categories = ["Rolls", "Momos", "Drinks"];
 
 const products = [
@@ -27,19 +29,20 @@ const products = [
   }
 ];
 
-let cart = {};
-cart = JSON.parse(localStorage.getItem("cart") || "{}");
+// load cart
+let cart = JSON.parse(localStorage.getItem("cart") || "{}");
 
 const categoryDiv = document.getElementById("categories");
 const menuDiv = document.getElementById("menu");
 const cartCount = document.getElementById("cartCount");
 
 function renderCategories() {
+  categoryDiv.innerHTML = "";
   categories.forEach((cat, i) => {
     const div = document.createElement("div");
     div.className = "category" + (i === 0 ? " active" : "");
-    div.innerText = cat;
-    div.onclick = () => selectCategory(cat, div);
+    div.textContent = cat;
+    div.addEventListener("click", () => selectCategory(cat, div));
     categoryDiv.appendChild(div);
   });
 }
@@ -52,32 +55,34 @@ function selectCategory(cat, el) {
 
 function renderMenu(cat) {
   menuDiv.innerHTML = "";
-  products.filter(p => p.category === cat).forEach(p => {
-    const qty = cart[p.id] || 0;
 
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML = `
-      <img src="${p.img}">
-      <div class="card-details">
-        <h4>${p.name}</h4>
-        <p>${p.desc}</p>
-        <div class="price">₹${p.price}</div>
-        <div class="qty-control">
-          <button>-</button>
-          <span>${qty}</span>
-          <button>+</button>
+  products
+    .filter(p => p.category === cat)
+    .forEach(p => {
+      const qty = cart[p.id] || 0;
+
+      const card = document.createElement("div");
+      card.className = "card";
+
+      card.innerHTML = `
+        <img src="${p.img}" />
+        <div class="card-details">
+          <h4>${p.name}</h4>
+          <p>${p.desc}</p>
+          <div class="price">₹${p.price}</div>
+          <div class="qty-control">
+            <button class="minus">-</button>
+            <span>${qty}</span>
+            <button class="plus">+</button>
+          </div>
         </div>
-      </div>
-    `;
+      `;
 
-    const [minus, , plus] = card.querySelectorAll("button, span");
+      card.querySelector(".minus").addEventListener("click", () => updateQty(p.id, -1));
+      card.querySelector(".plus").addEventListener("click", () => updateQty(p.id, 1));
 
-    minus.onclick = () => updateQty(p.id, -1);
-    plus.onclick = () => updateQty(p.id, 1);
-
-    menuDiv.appendChild(card);
-  });
+      menuDiv.appendChild(card);
+    });
 }
 
 function updateQty(id, change) {
@@ -87,27 +92,26 @@ function updateQty(id, change) {
   localStorage.setItem("cart", JSON.stringify(cart));
 
   updateCartCount();
-  renderMenu(document.querySelector(".category.active").innerText);
+  const active = document.querySelector(".category.active");
+  if (active) renderMenu(active.textContent);
 }
-
 
 function updateCartCount() {
   const count = Object.values(cart).reduce((a, b) => a + b, 0);
-  cartCount.innerText = count;
+  cartCount.textContent = count;
 }
 
+// initial render
 renderCategories();
 renderMenu(categories[0]);
+updateCartCount();
 
-
+// cart button
 document.addEventListener("DOMContentLoaded", () => {
   const cartBtn = document.getElementById("cartBtn");
-
   if (cartBtn) {
     cartBtn.addEventListener("click", () => {
       window.location.href = "cart.html";
     });
-  } else {
-    console.error("Cart button not found");
   }
 });
