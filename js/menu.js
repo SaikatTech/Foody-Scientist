@@ -28,8 +28,6 @@ const products = [
 ];
 
 let cart = {};
-cart = JSON.parse(localStorage.getItem("cart") || "{}");
-
 
 const categoryDiv = document.getElementById("categories");
 const menuDiv = document.getElementById("menu");
@@ -81,16 +79,11 @@ function renderMenu(cat) {
   });
 }
 
-ffunction updateQty(id, change) {
+function updateQty(id, change) {
   cart[id] = Math.max(0, (cart[id] || 0) + change);
-  if (cart[id] === 0) delete cart[id];
-
-  localStorage.setItem("cart", JSON.stringify(cart));
-
   updateCartCount();
   renderMenu(document.querySelector(".category.active").innerText);
 }
-
 
 function updateCartCount() {
   const count = Object.values(cart).reduce((a, b) => a + b, 0);
