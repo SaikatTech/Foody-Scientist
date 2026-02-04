@@ -1,34 +1,30 @@
 // js/auth.js
 import { auth } from "./firebase.js";
 import {
-  signInWithPhoneNumber,
-  RecaptchaVerifier,
-  onAuthStateChanged
+  GoogleAuthProvider,
+  signInWithPopup,
+  onAuthStateChanged,
+  signOut
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 import { saveLoginTime, isSessionValid, clearSession } from "./session.js";
 
-let recaptchaVerifier = null;
+const provider = new GoogleAuthProvider();
 
-// ✅ Create reCAPTCHA ONLY when needed
-function getRecaptcha() {
-  if (!recaptchaVerifier) {
-    recaptchaVerifier = new RecaptchaVerifier(
-      auth,
-      "recaptcha-container",
-      {
-        size: "invisible"
-      }
-    );
-  }
-  return recaptchaVerifier;
+// ✅ Google Sign-In
+export async function googleLogin() {
+  await signInWithPopup(auth, provider);
+  saveLoginTime();
 }
 
-export async function sendOTP(phone) {
-  const verifier = getRecaptcha();
-  return signInWithPhoneNumber(auth, phone, verifier);
+// ✅ Logout (optional, useful later)
+export async function logout() {
+  await signOut(auth);
+  clearSession();
+  window.location.replace("/Foody-Scientist/login.html");
 }
 
+// ✅ Route protection
 export function monitorAuth(redirectIfLoggedIn = false) {
   onAuthStateChanged(auth, (user) => {
     if (user && isSessionValid()) {
