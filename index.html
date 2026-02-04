@@ -3,14 +3,20 @@
 <head>
   <title>Food Cart</title>
 </head>
-<body>
+<body style="display:none">
 
 <h1>Welcome to Food Cart</h1>
 <p>Menu will load here (Phase 2)</p>
 
 <script type="module">
 import { monitorAuth } from "./js/auth.js";
+
 monitorAuth(false);
+
+// show page AFTER auth decision
+setTimeout(() => {
+  document.body.style.display = "block";
+}, 500);
 </script>
 
 </body>
