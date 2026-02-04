@@ -1,6 +1,6 @@
 // js/auth.js
 import { auth } from "./firebase.js";
-const BASE_PATH = "/Foodie-Scientist/";
+const BASE_PATH = "/Foody-Scientist/";
 
 import {
   signInWithPhoneNumber,
