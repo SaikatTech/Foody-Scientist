@@ -30,6 +30,7 @@ const products = [
 let cart = {};
 cart = JSON.parse(localStorage.getItem("cart") || "{}");
 
+
 const categoryDiv = document.getElementById("categories");
 const menuDiv = document.getElementById("menu");
 const cartCount = document.getElementById("cartCount");
@@ -43,18 +44,6 @@ function renderCategories() {
     categoryDiv.appendChild(div);
   });
 }
-
-function updateQty(id, change) {
-  cart[id] = Math.max(0, (cart[id] || 0) + change);
-  if (cart[id] === 0) delete cart[id];
-
-  localStorage.setItem("cart", JSON.stringify(cart));
-
-  updateCartCount();
-  renderMenu(document.querySelector(".category.active").innerText);
-}
-
-
 
 function selectCategory(cat, el) {
   document.querySelectorAll(".category").forEach(c => c.classList.remove("active"));
@@ -92,15 +81,26 @@ function renderMenu(cat) {
   });
 }
 
+ffunction updateQty(id, change) {
+  cart[id] = Math.max(0, (cart[id] || 0) + change);
+  if (cart[id] === 0) delete cart[id];
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  updateCartCount();
+  renderMenu(document.querySelector(".category.active").innerText);
+}
+
 
 function updateCartCount() {
   const count = Object.values(cart).reduce((a, b) => a + b, 0);
   cartCount.innerText = count;
 }
 
-
 renderCategories();
 renderMenu(categories[0]);
+
+
 document.addEventListener("DOMContentLoaded", () => {
   const cartBtn = document.getElementById("cartBtn");
 
@@ -112,4 +112,3 @@ document.addEventListener("DOMContentLoaded", () => {
     console.error("Cart button not found");
   }
 });
-
