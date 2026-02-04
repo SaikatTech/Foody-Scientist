@@ -92,6 +92,13 @@ function renderMenu(cat) {
   });
 }
 
+
+function updateCartCount() {
+  const count = Object.values(cart).reduce((a, b) => a + b, 0);
+  cartCount.innerText = count;
+}
+
+
 renderCategories();
 renderMenu(categories[0]);
 document.addEventListener("DOMContentLoaded", () => {
