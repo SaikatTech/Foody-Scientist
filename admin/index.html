@@ -1,18 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Admin</title>
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
-<h1>Admin Panel</h1>
-<p>Products, categories, orders (Phase 3)</p>
+<header class="topbar">
+  <h2>Admin Panel</h2>
+</header>
+
+<div style="padding:10px">
+  <button onclick="location.href='products.html'">🍔 Manage Products</button><br><br>
+  <button onclick="location.href='orders.html'">📦 View Orders</button>
+</div>
 
 <script type="module">
 import { monitorAuth } from "../js/auth.js";
 monitorAuth(false);
 </script>
-
 
 </body>
 </html>
