@@ -1,15 +1,9 @@
 // js/firebase.js
 
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getDatabase } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-
-const firebaseConfig = { /* your config */ };
-const app = initializeApp(firebaseConfig);
-
-// Ensure the 'export' keyword is present here
-export const auth = getAuth(app); 
 
 // 🔴 ONLY EDIT THIS OBJECT
 const firebaseConfig = {
@@ -28,4 +22,5 @@ const app = initializeApp(firebaseConfig);
 // ✅ EXPLICIT exports (THIS fixes your error)
 export const auth = getAuth(app);
 export const db = getDatabase(app);
+
 
